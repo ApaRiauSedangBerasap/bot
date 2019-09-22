@@ -30,14 +30,14 @@ nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 nowdate=$(date +'%m-%d-%Y')
 nowtime=$(date +'%H:%M')
-outputfile="$mydir/data/screenshot_$nowdate-$nowtime.jpg"
+screenshot_file="$mydir/data/screenshot_$nowdate-$nowtime.jpg"
 logfile="$mydir/data/log_$nowdate-$nowtime.txt"
 # ref : https://stackoverflow.com/a/27573049
 
 echo "input path $inputpath"
 echo "nama lokasi $namalokasi"
 echo "logfile path $logfile"
-echo "output file $outputfile"
+echo "output file $screenshot_file"
 
 echo "Attempting to get screenshot of '$nama_lokasi' on $nowdate , $nowtime" > $logfile
 url_status=$(curl -sL -w "%{http_code}\\n" "$inputpath" -o /dev/null)
@@ -47,11 +47,11 @@ then
     echo "Url $inputpath unreacheble with HTTP status $url_status" >> $logfile
     exit 1
 else
-    ffmpeg -ss 00:00:01 -i $inputpath -vframes 1 -q:v 2 "$outputfile" >> $logfile
+    ffmpeg -ss 00:00:01 -i $inputpath -vframes 1 -q:v 2 "$screenshot_file" >> $logfile
 fi
 
 # upload image to imgbb
-upload_result=$(curl --location --request POST "https://api.imgbb.com/1/upload?key=$IMGBB_API_KEY" --form "image=@$outputfile")
+upload_result=$(curl --location --request POST "https://api.imgbb.com/1/upload?key=$IMGBB_API_KEY" --form "image=@$screenshot_file")
 result_url=$(echo $upload_result | python -c "import sys, json; print json.load(sys.stdin)['data']['url']" || echo "FAILED")
 echo "final url: $result_url"
 
@@ -64,8 +64,13 @@ else
     echo $upload_result >> $logfile
 fi
 
+post_message="Tangkapan CCTV di $nama_lokasi pada $nowdate pukul $nowtime WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
+
 # post to telegram bot
-curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Tangkapan CCTV di $nama_lokasi pada $nowdate pukul $nowtime WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
+curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="$post_message"
+
+# post to twitter
+python tweet.py "$post_message" "$screenshot_file"
 
 # ========= DOWNLOAD DATA BMKG =======================================
 url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 

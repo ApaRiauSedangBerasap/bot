@@ -9,7 +9,7 @@ Script ini secara umum melakukan beberapa hal berikut:
 - mengirimkan notifikasi via telegram bot dengan akun yang kita simpan
 - mendownload cuplikan situs https://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU
 
-Untuk menjalankan script ini, diperlukan file local_config.sh , silahkan rename dari file local_config.sh.example yang telah di sediakan. Script ini juga membutuhkan python 2.x untuk beberapa bagian nya.
+Untuk menjalankan script ini, diperlukan file local_config.sh , silahkan rename dari file local_config.sh.example yang telah di sediakan. Script ini juga membutuhkan python 2.x untuk beberapa bagian nya, dan juga ada beberapa library yang perlu di install di requirements.txt.
 
 Kode ini dipublikasikan sebagai kode Open Source dengan lisensi MIT (https://opensource.org/licenses/MIT)
 
