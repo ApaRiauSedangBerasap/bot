@@ -9,8 +9,8 @@ available_urls[3]="http://183.91.68.83:8000/cctv-kota/cctvHrpRaya.m3u8" # Jl. Ha
 available_urls[4]="http://183.91.68.83:8000/cctv-kota/cctv-soebrantas-garudasakti.m3u8" # Sp. Soebrantas - Garuda Sakti
 available_urls[5]="http://183.91.68.83:8000/cctv-kota/cctv101.m3u8" # Terminal AKAP
 available_lokasi=(
- "kantor walikota pekanbaru"
- "Bank Riau Pusat"
+ "Kantor Walikota Pekanbaru"
+ "Kantor Bank Riau Pusat"
  "Pasar Bawah"
  "Jl. Harapan Raya"
  "Sp. Soebrantas - Garuda Sakti"
@@ -36,4 +36,4 @@ result_url=$(cat $logfile | python -c "import sys, json; print json.load(sys.std
 echo "final url: $result_url"
 
 # post to telegram bot
-curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Pantau lalin pekanbaru terbaru, $nama_lokasi pada $nowtime : $result_url"
+curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Tangkapan CCTV di $nama_lokasi pada $nowtime (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
