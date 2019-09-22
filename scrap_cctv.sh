@@ -22,20 +22,38 @@ nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 #inputpath="http://183.91.68.83:8000/cctv-kota/cctv113.m3u8"
 
-nowtime=$(date +'%m-%d-%Y_%H-%M')
-outputfile="data/output_$nowtime.jpg"
-logfile="data/log_$nowtime.txt"
+nowdate=$(date +'%m-%d-%Y')
+nowtime=$(date +'%H:%M')
+outputfile="data/screenshot_$nowdate-$nowtime.jpg"
+logfile="data/log_$nowdate-$nowtime.txt"
+echo "logfile path $logfile"
+echo "output file $outputfile"
 # ref : https://stackoverflow.com/a/27573049
 
-echo $outputfile
-
-ffmpeg -ss 00:00:01 -i $inputpath -vframes 1 -q:v 2 "$outputfile"
+echo "Attempting to get screenshot of '$nama_lokasi' on $nowdate , $nowtime" > $logfile
+url_status=$(curl -sL -w "%{http_code}\\n" "$inputpath" -o /dev/null)
+echo "url status $url_status"
+if [ $url_status != "200" ] 
+then
+    echo "Url $inputpath unreacheble with HTTP status $url_status" >> $logfile
+    exit 1
+else
+    ffmpeg -ss 00:00:01 -i $inputpath -vframes 1 -q:v 2 "$outputfile" >> $logfile
+fi
 
 # upload image to imgbb
-curl --location --request POST "https://api.imgbb.com/1/upload?key=$IMGBB_API_KEY" --form "image=@$outputfile" > $logfile
-
-result_url=$(cat $logfile | python -c "import sys, json; print json.load(sys.stdin)['data']['url']")
+upload_result=$(curl --location --request POST "https://api.imgbb.com/1/upload?key=$IMGBB_API_KEY" --form "image=@$outputfile")
+result_url=$(echo $upload_result | python -c "import sys, json; print json.load(sys.stdin)['data']['url']" || echo "FAILED")
 echo "final url: $result_url"
 
+if [ $result_url = "FAILED" ]
+then
+    echo "Erron on uploading image to imagebb" >> $logfile
+    echo $upload_result >> $logfile
+    exit 1
+else
+    echo $upload_result >> $logfile
+fi
+
 # post to telegram bot
-curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Tangkapan CCTV di $nama_lokasi pada $nowtime (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
+curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Tangkapan CCTV di $nama_lokasi pada $nowdate pukul $nowtime WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
