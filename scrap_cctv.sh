@@ -30,8 +30,8 @@ nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 nowdate=$(date +'%m-%d-%Y')
 nowtime=$(date +'%H:%M')
-outputfile="data/screenshot_$nowdate-$nowtime.jpg"
-logfile="data/log_$nowdate-$nowtime.txt"
+outputfile="$mydir/data/screenshot_$nowdate-$nowtime.jpg"
+logfile="$mydir/data/log_$nowdate-$nowtime.txt"
 # ref : https://stackoverflow.com/a/27573049
 
 echo "input path $inputpath"
@@ -69,5 +69,5 @@ curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d
 
 # ========= DOWNLOAD DATA BMKG =======================================
 url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
-wget $url_bmkg -O "data/data_bmkg_$nowdate-$nowtime.html"
+wget $url_bmkg -O "$mydir/data/data_bmkg_$nowdate-$nowtime.html"
 
