@@ -1,6 +1,8 @@
 #!/bin/bash
 
-. local_config.sh
+mydir=$(dirname "$0") # ref : https://unix.stackexchange.com/a/273347
+
+. $mydir/local_config.sh
 
 # ====== DEFINITION OF STREAMING URL =========
 # repsitory ini memanfaatkan link .m3u8 yang cukup populer untuk situs-situs cctv
