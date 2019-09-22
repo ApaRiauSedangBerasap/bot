@@ -17,7 +17,8 @@ available_lokasi=(
  "Sp. Soebrantas - Garuda Sakti"
  "Terminal AKAP"
 )
-idx_rand=$(( ( RANDOM % ${#available_urls[@]} )  + 1 ))
+elnum=${#available_urls[@]}
+idx_rand=$(python -S -c "import random; print random.randrange(0,$elnum)")
 nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 #inputpath="http://183.91.68.83:8000/cctv-kota/cctv113.m3u8"
@@ -26,9 +27,12 @@ nowdate=$(date +'%m-%d-%Y')
 nowtime=$(date +'%H:%M')
 outputfile="data/screenshot_$nowdate-$nowtime.jpg"
 logfile="data/log_$nowdate-$nowtime.txt"
+# ref : https://stackoverflow.com/a/27573049
+
+echo "input path $inputpath"
+echo "nama lokasi $namalokasi"
 echo "logfile path $logfile"
 echo "output file $outputfile"
-# ref : https://stackoverflow.com/a/27573049
 
 echo "Attempting to get screenshot of '$nama_lokasi' on $nowdate , $nowtime" > $logfile
 url_status=$(curl -sL -w "%{http_code}\\n" "$inputpath" -o /dev/null)
@@ -57,3 +61,7 @@ fi
 
 # post to telegram bot
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Tangkapan CCTV di $nama_lokasi pada $nowdate pukul $nowtime WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
+
+# ========= DOWNLOAD DATA BMKG =======================================
+wget "http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" -O "data/data_bmkg_$nowdate-$nowtime.html"
+
