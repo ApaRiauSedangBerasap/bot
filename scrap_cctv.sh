@@ -1,3 +1,5 @@
+#!/bin/bash
+
 . local_config.sh
 
 available_urls=()
