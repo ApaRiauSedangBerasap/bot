@@ -1,6 +1,5 @@
 . local_config.sh
 
-idx_rand=$(( ( RANDOM % ${#available_urls[@]} )  + 1 ))
 available_urls=()
 available_urls[0]="http://183.91.68.83:8000/cctv-kota/cctv113.m3u8" # kantor walikota pekanbaru
 available_urls[1]="http://183.91.68.83:8000/cctv-kota/cctv105.m3u8" # Bank Riau Pusat
@@ -16,6 +15,7 @@ available_lokasi=(
  "Sp. Soebrantas - Garuda Sakti"
  "Terminal AKAP"
 )
+idx_rand=$(( ( RANDOM % ${#available_urls[@]} )  + 1 ))
 nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 #inputpath="http://183.91.68.83:8000/cctv-kota/cctv113.m3u8"
