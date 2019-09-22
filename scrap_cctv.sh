@@ -2,6 +2,10 @@
 
 . local_config.sh
 
+# ====== DEFINITION OF STREAMING URL =========
+# repsitory ini memanfaatkan link .m3u8 yang cukup populer untuk situs-situs cctv
+# publik. saya mendapatkan link-link dibawah ini dengan melihat source code halaman
+# dari http://cctv.pekanbaru.go.id/live
 available_urls=()
 available_urls[0]="http://183.91.68.83:8000/cctv-kota/cctv113.m3u8" # kantor walikota pekanbaru
 available_urls[1]="http://183.91.68.83:8000/cctv-kota/cctv105.m3u8" # Bank Riau Pusat
@@ -17,12 +21,11 @@ available_lokasi=(
  "Sp. Soebrantas - Garuda Sakti"
  "Terminal AKAP"
 )
+
 elnum=${#available_urls[@]}
 idx_rand=$(python -S -c "import random; print random.randrange(0,$elnum)")
 nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
-#inputpath="http://183.91.68.83:8000/cctv-kota/cctv113.m3u8"
-
 nowdate=$(date +'%m-%d-%Y')
 nowtime=$(date +'%H:%M')
 outputfile="data/screenshot_$nowdate-$nowtime.jpg"
@@ -63,5 +66,6 @@ fi
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="Tangkapan CCTV di $nama_lokasi pada $nowdate pukul $nowtime WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
 
 # ========= DOWNLOAD DATA BMKG =======================================
-wget "http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" -O "data/data_bmkg_$nowdate-$nowtime.html"
+url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
+wget $url_bmkg -O "data/data_bmkg_$nowdate-$nowtime.html"
 
