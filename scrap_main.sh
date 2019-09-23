@@ -30,8 +30,10 @@ nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 nowdate=$(date +'%d-%m-%Y')
 nowtime=$(date +'%H:%M')
-screenshot_file="$mydir/data/screenshot_$nowdate-$nowtime.jpg"
+screenshot_file="$mydir/data/cctv_screenshot_$nowdate-$nowtime.jpg"
 logfile="$mydir/data/log_$nowdate-$nowtime.txt"
+bmkg_file="$mydir/data/data_bmkg_$nowdate-$nowtime.html"
+bmkg_screenshot_file="$mydir/data/screenshot_bmkg_$nowdate-$nowtime.png"
 # ref : https://stackoverflow.com/a/27573049
 
 echo "input path $inputpath"
@@ -39,6 +41,21 @@ echo "nama lokasi $namalokasi"
 echo "logfile path $logfile"
 echo "output file $screenshot_file"
 
+
+# ========= DOWNLOAD DATA BMKG =======================================
+url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
+bmkg_post_message="Informasi Konsentrasi Partikulat (PM10) dari BMKG Pekanbaru per $nowdate pukul $nowtime ( https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU )."
+
+wget $url_bmkg -O "$bmkg_file"
+
+python scrap_bmkg.py "$bmkg_file"
+
+google-chrome --headless --disable-gpu --window-size=700,580 --screenshot="$bmkg_screenshot_file" "$mydir/bmkg/bmkg.html"
+
+# post to twitter
+python tweet.py "$bmkg_post_message" "$bmkg_screenshot_file"
+
+# ============ SCRENNSHOT CCTV ==========
 echo "Attempting to get screenshot of '$nama_lokasi' on $nowdate , $nowtime" > $logfile
 url_status=$(curl -sL -w "%{http_code}\\n" "$inputpath" -o /dev/null)
 echo "url status $url_status"
@@ -71,8 +88,4 @@ curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d
 
 # post to twitter
 python tweet.py "$post_message" "$screenshot_file"
-
-# ========= DOWNLOAD DATA BMKG =======================================
-url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
-wget $url_bmkg -O "$mydir/data/data_bmkg_$nowdate-$nowtime.html"
 

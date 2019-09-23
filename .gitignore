@@ -1,4 +1,8 @@
 local_config.sh
 data/*
+
+# vim cache files
 *.sw*
 
+# linux cache files
+.fuse_hidden
