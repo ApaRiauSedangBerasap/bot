@@ -28,8 +28,8 @@ elnum=${#available_urls[@]}
 idx_rand=$(python -c "import random; print random.randrange(0,$elnum)")
 nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
-nowdate=$(date +'%d-%m-%Y')
-nowtime=$(date +'%H:%M')
+nowdate=$(TZ='Asia/Jakarta' date +'%d-%m-%Y')
+nowtime=$(TZ='Asia/Jakarta' date +'%H:%M')
 screenshot_file="$mydir/data/screenshot_$nowdate-$nowtime.jpg"
 logfile="$mydir/data/log_$nowdate-$nowtime.txt"
 # ref : https://stackoverflow.com/a/27573049
