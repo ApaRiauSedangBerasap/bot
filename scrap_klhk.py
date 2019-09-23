@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from pprint import pprint
 from datetime import datetime
 import requests
@@ -14,18 +16,19 @@ pprint(data)
 
 ispu_terakhir = int(data[0]['pm25'])
 waktu_terakhir = datetime.strptime(data[0]['waktu'], '%Y-%m-%d %H:%M:%S.%f')
-if (ispu_terakhir > 300):
+# pengakategorian berdasarkan tabel 8 di dokumen http://iku.menlhk.go.id/aqms/istilah
+if (ispu_terakhir > 250):
     status = 'BERBAHAYA'
-elif (ispu_terakhir > 200):
+elif (ispu_terakhir > 150):
     status = 'SANGAT TIDAK SEHAT'
-elif (ispu_terakhir > 100):
+elif (ispu_terakhir > 65.5):
     status = 'TIDAK SEHAT'
-elif (ispu_terakhir > 50):
+elif (ispu_terakhir > 15.5):
     status = 'SEDANG'
 else:
     status = 'BAIK'
 
-post_message='Kondisi udara Pekanbaru saat ini : {status}, nilai ispu parameter PM 2.5 : {ispu} pada tanggal {tanggal} pukul {waktu}. Sumber : KLHK Pekanbaru ({url})'.format(status=status, ispu=ispu_terakhir,
+post_message=u'Kondisi udara Pekanbaru saat ini : {status}, nilai ispu parameter PM 2.5 : {ispu} μg/m3 pada tanggal {tanggal} pukul {waktu}. Sumber : KLHK Pekanbaru ({url})'.format(status=status, ispu=ispu_terakhir,
            tanggal=waktu_terakhir.strftime('%d-%m-%Y'),
            waktu=waktu_terakhir.strftime('%H:%M'),
            url=url_web_klhk_pku)
