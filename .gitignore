@@ -1,4 +1,9 @@
 local_config.sh
 data/*
+
 *.sw*
 
+.fuse_hidden*
+
+*.py*
+!*.py
