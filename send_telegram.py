@@ -1,3 +1,6 @@
+import os
+import requests
+
 def send_telegram(msg):
     TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')

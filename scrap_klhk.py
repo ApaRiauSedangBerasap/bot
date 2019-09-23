@@ -25,7 +25,7 @@ elif (ispu_terakhir > 50):
 else:
     status = 'BAIK'
 
-post_message='Kondisi udara Pekanbaru saat ini : {status}, nilai ispu parameter PM 2.5 {ispu} pada tanggal {tanggal} pukul {waktu}. Sumber : KLHK Pekanbaru ({url})'.format(status=status, ispu=ispu_terakhir,
+post_message='Kondisi udara Pekanbaru saat ini : {status}, nilai ispu parameter PM 2.5 : {ispu} pada tanggal {tanggal} pukul {waktu}. Sumber : KLHK Pekanbaru ({url})'.format(status=status, ispu=ispu_terakhir,
            tanggal=waktu_terakhir.strftime('%d-%m-%Y'),
            waktu=waktu_terakhir.strftime('%H:%M'),
            url=url_web_klhk_pku)
@@ -33,7 +33,7 @@ post_message='Kondisi udara Pekanbaru saat ini : {status}, nilai ispu parameter 
 print post_message
 ## post to telegram
 from send_telegram import send_telegram
-# send_telegram(post_message)
+send_telegram(post_message)
 
 from tweet import tweet
-# tweet(post_message)
+tweet(post_message)

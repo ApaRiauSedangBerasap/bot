@@ -1,4 +1,4 @@
-def tweet(msg, media):
+def tweet(msg, media=None):
 # use python-twitter package : https://github.com/bear/python-twitter
     import twitter, os
 
