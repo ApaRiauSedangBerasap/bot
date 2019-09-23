@@ -25,7 +25,7 @@ available_lokasi=(
 )
 
 elnum=${#available_urls[@]}
-idx_rand=$(python -S -c "import random; print random.randrange(0,$elnum)")
+idx_rand=$(python -c "import random; print random.randrange(0,$elnum)")
 nama_lokasi=${available_lokasi[idx_rand]}
 inputpath=${available_urls[idx_rand]}
 nowdate=$(date +'%d-%m-%Y')
@@ -35,7 +35,7 @@ logfile="$mydir/data/log_$nowdate-$nowtime.txt"
 # ref : https://stackoverflow.com/a/27573049
 
 echo "input path $inputpath"
-echo "nama lokasi $namalokasi"
+echo "nama lokasi $nama_lokasi"
 echo "logfile path $logfile"
 echo "output file $screenshot_file"
 
