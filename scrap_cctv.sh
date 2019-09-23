@@ -67,12 +67,12 @@ fi
 post_message="Tangkapan CCTV di $nama_lokasi pada $nowdate pukul $nowtime WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : $result_url"
 
 # post to telegram bot
-curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="$post_message"
+curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id=$TELEGRAM_CHAT_ID -d text="$post_message" >> $logfile
 
 # post to twitter
-python tweet.py "$post_message" "$screenshot_file"
+python tweet.py "$post_message" "$screenshot_file" >> $logfile
 
 # ========= DOWNLOAD DATA BMKG =======================================
 url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
-wget $url_bmkg -O "$mydir/data/data_bmkg_$nowdate-$nowtime.html"
+wget $url_bmkg -O "$mydir/data/data_bmkg_$nowdate-$nowtime.html" >> $logfile
 
