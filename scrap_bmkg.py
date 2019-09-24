@@ -15,7 +15,7 @@ url_bmkg_pku = 'https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg
 
 url_used = url_bmkg_pku
 print 'start loading', url_used
-r = requests.get(url_used, verify=False)
+r = requests.get(url_used, verify=False) # important, turned off ssl verification. see : https://2.python-requests.org/en/master/user/advanced/#ssl-cert-verification
 page_content = r.text
 
 # parse retrieved page
@@ -49,7 +49,8 @@ with open(temp_bmkg_filepath, 'w') as f:
 os.chdir('bmkg')
 
 # ref on google chrome headless usage: https://developers.google.com/web/updates/2017/04/headless-chrome
-res = subprocess.check_output(['google-chrome --headless --disable-gpu --window-size=1280,768 --dump-dom  temp_bmkg_replaced.html'], shell=True)
+chrome_executable = os.getenv('CHROME_EXECUTABLE', 'google-chrome')
+res = subprocess.check_output([chrome_executable, '--headless --disable-gpu --window-size=1280,768 --dump-dom  temp_bmkg_replaced.html'], shell=True)
 # print res
 
 # final parsing using beautiful soup

@@ -73,6 +73,6 @@ curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d
 python $mydir/tweet.py "$post_message" "$screenshot_file" >> $logfile
 
 # ========= DOWNLOAD DATA BMKG =======================================
-url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
-wget $url_bmkg -O "$mydir/data/data_bmkg_$nowdate-$nowtime.html" >> $logfile
+# url_bmkg="http://www.bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" 
+# wget $url_bmkg -O "$mydir/data/data_bmkg_$nowdate-$nowtime.html" >> $logfile
 
