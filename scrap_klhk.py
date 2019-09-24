@@ -33,7 +33,7 @@ post_message=u'Kondisi udara Pekanbaru saat ini : {status}, nilai ispu parameter
            waktu=waktu_terakhir.strftime('%H:%M'),
            url=url_web_klhk_pku)
 
-print post_message
+print post_message.encode('utf-8')
 ## post to telegram
 from send_telegram import send_telegram
 send_telegram(post_message)
