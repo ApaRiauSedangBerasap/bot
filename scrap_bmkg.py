@@ -10,6 +10,9 @@ import bs4
 from bs4 import BeautifulSoup
 import requests
 
+curdir = os.path.dirname(os.path.realpath(__file__))
+os.chdir(curdir)
+
 # retrieve latest data
 url_bmkg_pku = 'https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU'
 
