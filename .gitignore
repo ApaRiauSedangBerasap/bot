@@ -1,5 +1,6 @@
 local_config.sh
 data/*
+bmkg/temp*
 
 *.sw*
 
