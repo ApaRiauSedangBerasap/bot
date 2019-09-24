@@ -50,7 +50,7 @@ os.chdir('bmkg')
 
 # ref on google chrome headless usage: https://developers.google.com/web/updates/2017/04/headless-chrome
 chrome_executable = os.getenv('CHROME_EXECUTABLE', 'google-chrome')
-res = subprocess.check_output([chrome_executable, '--headless --disable-gpu --window-size=1280,768 --dump-dom  temp_bmkg_replaced.html'], shell=True)
+res = subprocess.check_output([chrome_executable + ' --headless --disable-gpu --window-size=1280,768 --dump-dom  temp_bmkg_replaced.html'], shell=True)
 # print res
 
 # final parsing using beautiful soup
