@@ -29,12 +29,13 @@ res = sb.check_output([ cmd ], shell=True)
 
 # upload to imgbb
 IMGBB_API_KEY = os.getenv('IMGBB_API_KEY')
-upload_result=requests.post("https://api.imgbb.com/1/upload?key=$IMGBB_API_KEY", files={'image' : open(output_filepath, 'r') })
-result_url=upload_result.json()
+upload_result=requests.post("https://api.imgbb.com/1/upload?key="+IMGBB_API_KEY, files={'image' : open(output_filepath, 'r') })
+result=upload_result.json()
+result_url=result['data']['url']
 print result_url
 # result_url=result_url['data']['url']
 
-post_message="Tangkapan CCTV di {} pada {} pukul {} WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : {}".format(url_used[1], nowdate, nowtime, upload_result)
+post_message="Tangkapan CCTV di {} pada {} pukul {} WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : {}".format(url_used[1], nowdate, nowtime, result_url)
 
 print post_message.encode('utf-8')
 ## post to telegram
