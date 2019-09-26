@@ -1,4 +1,4 @@
-def tweet(msg, media=None):
+def send(msg, media=None):
 # use python-twitter package : https://github.com/bear/python-twitter
     import twitter, os
 
@@ -18,4 +18,4 @@ def tweet(msg, media=None):
 if __name__ == '__main__' :
     import sys
     media = open(sys.argv[2], 'rb') if len(sys.argv) > 2 else None
-    tweet(sys.argv[1], media)
+    send(sys.argv[1], media)

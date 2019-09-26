@@ -1,7 +1,7 @@
 import os
 import requests
 
-def send_telegram(msg):
+def send(msg):
     TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
     TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
@@ -13,5 +13,5 @@ def send_telegram(msg):
 
 if __name__ == '__main__' :
     import sys
-    send_telegram(sys.argv[1])
+    send(sys.argv[1])
 
