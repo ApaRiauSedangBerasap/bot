@@ -43,4 +43,4 @@ from send_telegram import send_telegram
 send_telegram(post_message)
 
 from tweet import tweet
-tweet(post_message)
+tweet(post_message, open(output_filepath, 'rb'))
