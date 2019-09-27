@@ -31,10 +31,10 @@ def run():
         cmd = 'ffmpeg -ss 00:00:01 -i {} -vframes 1 -q:v 2 {}'.format(url_used[0], output_filepath)
         res = sb.check_output([ cmd ], shell=True)
     except:
-        return False, None, None, None
+        return False, None, None, None, None
     # result_url=result_url['data']['url']
 
-    return (True, nowdate, nowtime, output_filepath)
+    return (True, url_used[1], nowdate, nowtime, output_filepath)
 
 def upload_imgbb(filepath):
     # upload to imgbb
@@ -45,10 +45,10 @@ def upload_imgbb(filepath):
     return result_url
 
 if __name__ == '__main__':
-    ok, nowdate, nowtime, result_filepath = run()
+    ok, location, nowdate, nowtime, result_filepath = run()
     result_url = upload_imgbb(result_filepath)
 
-    post_message="Tangkapan CCTV di {} pada {} pukul {} WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : {}".format(url_used[1], nowdate, nowtime, result_url)
+    post_message="Tangkapan CCTV di {} pada {} pukul {} WIB (lihat secara streaming di http://cctv.pekanbaru.go.id/live ) : {}".format(location, nowdate, nowtime, result_url)
 
     print post_message.encode('utf-8')
     ## post

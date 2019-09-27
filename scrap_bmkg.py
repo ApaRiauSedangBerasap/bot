@@ -35,35 +35,35 @@ def run():
             if len(i.contents) > 0 and ".highcharts" in i.contents[0] ]
     js_content = js_content[0]
 
-# parse template file
+    # parse template file
     bmkg_filepath='bmkg/bmkg.html'
     with open(bmkg_filepath, 'r') as f:
         t = f.readlines()
     soup = BeautifulSoup("".join(t), 'html.parser')
     elm = soup.select_one('#scriptPEKANBARU')
     elm.string = js_content.string
-# print 'elm', elm
-# print elm.contents
+    # print 'elm', elm
+    # print elm.contents
     for i in elm.children:
         if isinstance(i, bs4.element.Tag):
             i.extract()
-# elm.a.extract()
-# print type(elm.a)
+    # elm.a.extract()
+    # print type(elm.a)
 
-# print soup.prettify().encode('utf-8')
+    # print soup.prettify().encode('utf-8')
     temp_bmkg_filepath='bmkg/temp_bmkg_replaced.html'
     with open(temp_bmkg_filepath, 'w') as f:
         f.write(soup.prettify().encode('utf-8'))
 
-# re-parse replaced page using google-chrome headless
+    # re-parse replaced page using google-chrome headless
     os.chdir('bmkg')
 
-# ref on google chrome headless usage: https://developers.google.com/web/updates/2017/04/headless-chrome
+    # ref on google chrome headless usage: https://developers.google.com/web/updates/2017/04/headless-chrome
     chrome_executable = os.getenv('CHROME_EXECUTABLE', 'google-chrome')
     res = subprocess.check_output([chrome_executable + ' --headless --disable-gpu --window-size=1280,768 --dump-dom  temp_bmkg_replaced.html'], shell=True)
-# print res
+    # print res
 
-# final parsing using beautiful soup
+    # final parsing using beautiful soup
     soup = BeautifulSoup(res, 'html.parser')
     final_data = soup.select_one('#parsed_data')
     final_data = json.loads(final_data.text)

@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Bar Chart</title>
+	<script src="./input_data.js"></script>
+	<script src="./Chart.bundle.min.js"></script>
+    <script src="./chartjs-plugin-datalabels.min.js"></script>
+	<!--<script src="../../utils.js"></script>-->
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div id="myChart" style="width:400px;">
+	<!--<div id="myChart" width="200" height="200">-->
+		<canvas id="canvas" height="300px"></canvas>
+        <p>Sumber:
+            <ul>
+                <li>KLHK : http://iku.menlhk.go.id/aqms/pm25</li>
+                <li>BMKG : https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU"</li>
+            </ul>
+        </p>
+	</div>
+<script>
+var my_data = {
+    labels: ['PM2.5 (dari KLHK)', 'PM10 (dari BMKG)'],
+    datasets: [{
+        label: 'Konsentrasi Partikulat (dalam μg/m3)',
+        data: data_points,
+        backgroundColor: data_colors,
+        borderColor: [
+            //'rgba(255, 99, 132, 1)',
+            //'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 1
+    }]
+};
+var myChart = null;
+window.onload = function() {
+    var ctx = document.getElementById('canvas').getContext('2d');
+    myChart = new Chart(ctx, {
+        type: 'bar',
+        data: my_data,
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        // the data minimum used for determining the ticks is Math.min(dataMin, suggestedMin)
+                        //suggestedMin: 10,
+                        // the data maximum used for determining the ticks is Math.max(dataMax, suggestedMax)
+                        suggestedMax: 350,
+                    }
+                }]
+            },
+            plugins: {
+                // Change options for ALL labels of THIS CHART
+                datalabels: {
+                    //color: '#36A2EB',
+                    //offset: 1000,
+                    //anchor: 'end',
+                    color : 'white',
+                    font: {
+                        weight: 'bold'
+                    },
+                }
+            }
+        }
+    });
+};
+</script>
+</body></html>
