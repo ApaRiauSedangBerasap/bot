@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from pprint import pprint
 from datetime import datetime
+from datetime import timedelta
 import requests
 
 url_api_klhk_pku = "http://203.73.26.177/bar/json/dataispu2.php?idstasiun=PEKANBARU"
@@ -32,7 +33,8 @@ def run():
     else:
         status = 'BAIK'
 
-    return (True, ispu_terakhir, status, waktu_terakhir)
+    ok = (datetime.now() - waktu_terakhir) < timedelta(hours=3)
+    return (ok, ispu_terakhir, status, waktu_terakhir)
 
 if __name__ == '__main__':
 

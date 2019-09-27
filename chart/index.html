@@ -22,8 +22,8 @@
 		<canvas id="canvas" height="300px"></canvas>
         <p>Sumber:
             <ul>
-                <li>KLHK : http://iku.menlhk.go.id/aqms/pm25</li>
-                <li>BMKG : https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU"</li>
+                <li>KLHK : http://iku.menlhk.go.id/aqms/pm25 (pada <span id="klhk_time"></span> WIB)</li>
+                <li>BMKG : https://bmkg.go.id/kualitas-udara/informasi-partikulat-pm10.bmkg?Lokasi=PEKANBARU" (pada <span id="bmkg_time"></span> WIB)</li>
             </ul>
         </p>
 	</div>
@@ -42,7 +42,6 @@ var my_data = {
     }]
 };
 var myChart = null;
-window.onload = function() {
     var ctx = document.getElementById('canvas').getContext('2d');
     myChart = new Chart(ctx, {
         type: 'bar',
@@ -73,6 +72,7 @@ window.onload = function() {
             }
         }
     });
-};
+document.getElementById('klhk_time').innerHTML = data_times[0];
+document.getElementById('bmkg_time').innerHTML = data_times[1];
 </script>
 </body></html>

@@ -15,7 +15,8 @@ ok_cctv, cctv_location, cctv_date, cctv_time, cctv_filepath = scrap_cctv.run()
 color_options = {
     'BAIK'               : 'green',
     'SEDANG'             : 'blue',
-    'TIDAK SEHAT'        : 'yellow',
+    # 'TIDAK SEHAT'        : 'yellow',
+    'TIDAK SEHAT'        : '#c2c52a',
     'SANGAT TIDAK SEHAT' : 'red',
     'BERBAHAYA'          : 'black',
 }
@@ -31,12 +32,15 @@ if ok_klhk or ok_bmkg:
     text = """
 var data_points = [ {klhk_ispu}, {bmkg_ispu}],
     data_colors = [ '{klhk_color}', '{bmkg_color}' ];
+    data_times = [ '{klhk_time}', '{bmkg_time}' ];
 """
     text = text.format(
         klhk_ispu=klhk_ispu,
         bmkg_ispu=bmkg_ispu,
         klhk_color=color_options[klhk_status],
-        bmkg_color=color_options[bmkg_status]
+        bmkg_color=color_options[bmkg_status],
+        klhk_time=klhk_time.strftime('%d-%m-%Y %H:%M'),
+        bmkg_time=bmkg_time.strftime('%d-%m-%Y %H:%M')
     )
     
     data_path = curdir + '/chart/input_data.js'

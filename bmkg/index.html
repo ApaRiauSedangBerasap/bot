@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="./input_data.js"></script>
+</head>
+<body>
+    <div id='result'></div>
+    <script>
+    var result_data = {
+            data : input_data.series[0].data,
+            date : input_data.subtitle.text
+        };
+    document.getElementById('result').innerHTML = JSON.stringify(result_data);
+    </script>
+</body>
+</html>

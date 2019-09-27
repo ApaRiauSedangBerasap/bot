@@ -1,6 +1,7 @@
 local_config.sh
 data/*
 bmkg/temp*
+bmkg/input_data.js
 chart/input_data.js
 chart/chart.png
 
