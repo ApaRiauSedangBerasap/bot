@@ -5,6 +5,7 @@ from pprint import pprint
 from datetime import datetime
 import subprocess as sb
 import requests
+import random
 
 available_urls = [
     # ["http://183.91.68.83:8000/cctv-kota/cctv113.m3u8",'kantor walikota pekanbaru'],
@@ -15,7 +16,7 @@ available_urls = [
     ["http://183.91.68.83:8000/cctv-kota/cctv101.m3u8", 'Terminal AKAP'],
 ]
 
-url_used = available_urls[ datetime.now().hour % len(available_urls) ]
+url_used = available_urls[ random.randrange( len(available_urls) ) ]
 
 def run():
     curtime = datetime.now()
