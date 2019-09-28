@@ -11,9 +11,12 @@ available_urls = [
     # ["http://183.91.68.83:8000/cctv-kota/cctv113.m3u8",'kantor walikota pekanbaru'],
     ["http://183.91.68.83:8000/cctv-kota/cctv105.m3u8", 'Bank Riau Pusat'],
     ["http://183.91.68.83:8000/cctv-kota/cctvPasarBawah.m3u8", 'Pasar Bawah'],
-    ["http://183.91.68.83:8000/cctv-kota/cctvHrpRaya.m3u8", 'Jl. Harapan Raya'],
-    ["http://183.91.68.83:8000/cctv-kota/cctv-soebrantas-garudasakti.m3u8", 'Sp. Soebrantas - Garuda Sakti'],
+    # ["http://183.91.68.83:8000/cctv-kota/cctvHrpRaya.m3u8", 'Jl. Harapan Raya'],
+    # ["http://183.91.68.83:8000/cctv-kota/cctv-soebrantas-garudasakti.m3u8", 'Sp. Soebrantas - Garuda Sakti'],
     ["http://183.91.68.83:8000/cctv-kota/cctv101.m3u8", 'Terminal AKAP'],
+    ["http://183.91.68.83:8000/cctv-kota/cctvBatteryZ.m3u8", "Batterai Q Marpoyan"],
+    ["http://183.91.68.83:8000/cctv-kota/cctv-ramayana-sukaramai.m3u8", "Ramayana (Pasar Sukaramai)"],
+    # ["http://183.91.68.83:8000/cctv-kota/cctv111.m3u8", "Sp. Bandara SSK II"],
 ]
 
 url_used = available_urls[ random.randrange( len(available_urls) ) ]
