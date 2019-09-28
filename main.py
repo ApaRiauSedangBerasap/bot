@@ -63,9 +63,9 @@ var data_points = [ {klhk_ispu}, {bmkg_ispu}],
 
     msg = "Kondisi asap riau terakhir : "
     if ok_klhk:
-        msg += "{} menurut KLHK. ".format(klhk_status)
+        msg += "{} menurut data KLHK. ".format(klhk_status)
     if ok_bmkg:
-        msg += "{} menurut BMKG. ".format(bmkg_status)
+        msg += "{} menurut data BMKG. ".format(bmkg_status)
     pics = [ curdir + '/chart/chart.png' ]
 
     if ok_cctv:
