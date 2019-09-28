@@ -26,7 +26,13 @@ print 'ok_klhk, klhk_ispu, klhk_status, klhk_time:', ok_klhk, klhk_ispu, klhk_st
 print 'ok_bmkg, bmkg_ispu, bmkg_status, bmkg_time :',ok_bmkg, bmkg_ispu, bmkg_status, bmkg_time
 print 'ok_cctv, cctv_date, cctv_time, cctv_filepath :',ok_cctv, cctv_date, cctv_time, cctv_filepath
 
-if ok_klhk or ok_bmkg:
+# only post on below 2 conditions: 
+# 1. at 7:00 WIB everyday and either bmkg/klhk data exists
+# 2. when BMKG status is neiher BAIK/SEDANG. 
+# Why BMKG only? because bmkg's PM10 data seemed to me as more stable and not 
+# easily fluctuate compared to KLHK's PM2.5 data
+if (datetime.now().hour == 7 and (ok_klhk or ok_bmkg)) or \
+   (ok_bmkg and bmkg_status not in ['BAIK', 'SEDANG']) :
 
     # generate chart
     text = """
