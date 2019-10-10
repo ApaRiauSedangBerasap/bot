@@ -32,7 +32,8 @@ print 'ok_cctv, cctv_date, cctv_time, cctv_filepath :',ok_cctv, cctv_date, cctv_
 # Why BMKG only? because bmkg's PM10 data seemed to me as more stable and not 
 # easily fluctuate compared to KLHK's PM2.5 data
 if (datetime.now().hour == 7 and (ok_klhk or ok_bmkg)) or \
-   (ok_bmkg and bmkg_status not in ['BAIK', 'SEDANG']) :
+   (ok_bmkg and bmkg_status not in ['BAIK', 'SEDANG']) or \
+   (not ok_bmkg and ok_klhk and klhk_status not in ['BAIK', 'SEDANG']):
 
     # generate chart
     text = """
